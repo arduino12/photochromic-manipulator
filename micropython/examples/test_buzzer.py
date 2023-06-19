@@ -5,6 +5,7 @@ from buzzer import Buzzer
 
 buzzer = Buzzer(Pin(10), Pin(13))
 
+
 print("""
 Test Buzzer:
 Beeps and play melodies.

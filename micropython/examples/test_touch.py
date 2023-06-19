@@ -5,6 +5,7 @@ from time import sleep_ms
 touch_l = TouchPad(Pin(12)) # Touch-Pads pins can be 1-14!
 touch_r = TouchPad(Pin(4)) # PCB V2 connected to pin 34 so need soldering to pin 4!
 
+
 print("""
 Test Touch:
 Prints touch-pads states (pressed=large value, released=small value).
