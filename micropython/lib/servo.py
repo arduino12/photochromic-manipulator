@@ -1,5 +1,5 @@
 #
-# servo.py - micropython library for driving a PWM servo motor.
+# servo.py - MicroPython library for driving a PWM servo motor.
 #
 # https://github.com/arduino12/micropython-libs 2023/06/17
 #

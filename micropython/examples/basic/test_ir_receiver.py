@@ -10,14 +10,14 @@ from ir_rx.mce import MCE
 
 def ir_received(data, addr, ctrl):
     if data < 0:
-        print("NEC repeat...")
+        print('NEC repeat...')
     else:
-        print(f"\nData 0x{data:02x} Addr 0x{addr:04x} Ctrl 0x{ctrl:02x}")
+        print(f'\nData 0x{data:02x} Addr 0x{addr:04x} Ctrl 0x{ctrl:02x}')
 
 
 def ir_receiver_loop():
     try:
-        protocol = int(input("Enter protocol index: "))
+        protocol = int(input('Enter protocol index: '))
         PROTOCOLS = (NEC_8, NEC_16, SONY_12, SONY_15, SONY_20, RC5_IR, RC6_M0, MCE, SAMSUNG)
         ir_receiver = PROTOCOLS[protocol](Pin(14), ir_received)
     except KeyboardInterrupt:
@@ -26,14 +26,14 @@ def ir_receiver_loop():
 
     try:
         while True:
-            print(".", end="")
+            print('.', end='')
             sleep(1)
             collect() # free unneeded RAM allocations (takes 10-100ms)
     except KeyboardInterrupt:
         ir_receiver.close()
 
 
-print("""
+print('''
 Test IR Receiver:
 0: for NEC 8 bit protocol.
 1: for NEC 16 bit.
@@ -46,11 +46,11 @@ Test IR Receiver:
 8: for Samsung.
 
 Press ctrl-c to exit test.
-""")
+''')
 
 ir_receiver_loop()
 
-print("""
+print('''
 Done!
 Can press ctrl-d to soft-reset.
-""")
+''')

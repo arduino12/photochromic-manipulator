@@ -7,11 +7,11 @@ from math import sin, radians
 servo = Servo(Pin(6))
 
 
-print("""
+print('''
 Test Servo:
 Moves servo motor in a sinusoidal way.
 Press Ctrl+C to exit test.
-""")
+''')
 try:
     while True:
         for i in range(360):
@@ -20,7 +20,7 @@ try:
 except KeyboardInterrupt:
     pass
 servo.set_enable(False)
-print("""
+print('''
 Done!
 Can press ctrl-d to soft-reset.
-""")
+''')

@@ -88,11 +88,11 @@ def police(duration):
     rgb_leds_fill(BLACK)
 
 
-print("""
+print('''
 Test LEDs:
 LED effects using 2 RGB LEDs, 1 UV LED and 1 blue LED.
 Press ctrl-c to exit test.
-""")
+''')
 try:
     while True:
         rainbow(5)
@@ -105,7 +105,7 @@ except KeyboardInterrupt:
 uv_led.off()
 blue_led.off()
 rgb_leds_fill(BLACK)
-print("""
+print('''
 Done!
 Can press ctrl-d to soft-reset.
-""")
+''')

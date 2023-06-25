@@ -1,5 +1,5 @@
 #
-# buzzer.py - micropython library for driving a piezoelectric buzzer.
+# buzzer.py - MicroPython library for driving a piezoelectric buzzer.
 # Supports single-pin PWM (buzzer conected to a GPIO and GND),
 # and dual-pin complementary PWM (buzzer conected to both GPIOs) - louder than single-pin.
 #
