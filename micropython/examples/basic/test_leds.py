@@ -1,3 +1,4 @@
+from sys import modules
 from neopixel import NeoPixel
 from machine import Pin
 from time import time, sleep, sleep_ms
@@ -105,6 +106,7 @@ except KeyboardInterrupt:
 uv_led.off()
 blue_led.off()
 rgb_leds_fill(BLACK)
+modules.clear() # make sure we can re-import the example!
 print('''
 Done!
 Can press ctrl-d to soft-reset.

@@ -1,3 +1,4 @@
+from sys import modules
 from machine import Pin
 from time import sleep_ms
 from buzzer import Buzzer
@@ -19,6 +20,7 @@ try:
 except KeyboardInterrupt:
     pass
 buzzer.set_freq(0)
+modules.clear() # make sure we can re-import the example!
 print('''
 Done!
 Can press ctrl-d to soft-reset.

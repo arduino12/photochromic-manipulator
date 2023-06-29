@@ -1,3 +1,4 @@
+from sys import modules
 from machine import Pin, TouchPad
 from time import sleep_ms
 
@@ -19,6 +20,7 @@ try:
         sleep_ms(20)
 except KeyboardInterrupt:
     pass
+modules.clear() # make sure we can re-import the example!
 print('''
 Done!
 Can press ctrl-d to soft-reset.

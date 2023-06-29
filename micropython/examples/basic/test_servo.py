@@ -1,3 +1,4 @@
+from sys import modules
 from machine import Pin
 from time import sleep_ms
 from servo import Servo
@@ -20,6 +21,7 @@ try:
 except KeyboardInterrupt:
     pass
 servo.set_enable(False)
+modules.clear() # make sure we can re-import the example!
 print('''
 Done!
 Can press ctrl-d to soft-reset.

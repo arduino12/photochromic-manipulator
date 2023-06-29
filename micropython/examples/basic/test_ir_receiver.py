@@ -1,3 +1,4 @@
+from sys import modules
 from machine import Pin
 from time import sleep
 from gc import collect
@@ -47,9 +48,8 @@ Test IR Receiver:
 
 Press ctrl-c to exit test.
 ''')
-
 ir_receiver_loop()
-
+modules.clear() # make sure we can re-import the example!
 print('''
 Done!
 Can press ctrl-d to soft-reset.
