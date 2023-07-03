@@ -3,10 +3,10 @@
 #esp.osdebug(None)
 #import webrepl
 #webrepl.start()
-from examples.basic import test_leds
-print(
-'''
-╔═══════════════════════════════════════════════╗
-║ !!! Press ctrl-c to exit into interpreter !!! ║
-╚═══════════════════════════════════════════════╝
-''')
+#from examples.basic import test_leds
+#print(
+#'''
+#╔═══════════════════════════════════════════════╗
+#║ !!! Press ctrl-c to exit into interpreter !!! ║
+#╚═══════════════════════════════════════════════╝
+#''')
