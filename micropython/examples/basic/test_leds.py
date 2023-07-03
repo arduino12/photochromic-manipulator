@@ -14,7 +14,7 @@ MAGENTA = (255, 0, 255)
 WHITE = (255, 255, 255)
 
 
-rgb_leds = NeoPixel(Pin(9), 2)
+rgb_leds = NeoPixel(Pin(9), 3) # we have 2 LEDs but it cause MP to stuck after many calls to write..
 uv_led = Pin(33, Pin.OUT)
 blue_led = Pin(15, Pin.OUT)
 

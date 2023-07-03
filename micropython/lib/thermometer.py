@@ -4,6 +4,9 @@
 #
 # https://github.com/arduino12/micropython-libs 2023/06/24
 #
+
+__version__ = '1.0.0'
+
 from machine import I2C
 
 
@@ -27,6 +30,9 @@ class Thermometer:
 
 
 if __name__ == '__main__':
+
+    print('\nTest thermometer', __version__)
+
     from machine import Pin
     from time import sleep_ms
 

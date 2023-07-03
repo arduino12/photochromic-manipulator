@@ -5,12 +5,15 @@
 #
 # https://github.com/arduino12/micropython-libs 2023/06/17
 #
+
+__version__ = '1.0.0'
+
 from machine import Pin, PWM, mem32
 from micropython import const
 from sys import platform
 
-# see https://www.espressif.com/sites/default/files/documentation/esp32-s2_technical_reference_manual_en.pdf
-# page 186
+
+# see page 186 of https://www.espressif.com/sites/default/files/documentation/esp32-s2_technical_reference_manual_en.pdf
 _GPIO_FUNCn_OUT_SEL_CFG_REG = const(0x3F404554) #  (n: 0-53) (0x3F404000+0x0554+4*n)
 _GPIO_FUNCn_OUT_INV_SEL = const(1 << 9)
 
@@ -42,6 +45,8 @@ class Buzzer:
 
 
 if __name__ == '__main__':
+    print('\nTest buzzer', __version__)
+
     from machine import Pin
     from time import sleep_ms
 

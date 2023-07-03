@@ -2,12 +2,18 @@ from sys import modules
 from machine import Pin
 from time import sleep
 from gc import collect
-from ir_rx.print_error import print_error
-from ir_rx.nec import NEC_8, NEC_16, SAMSUNG
-from ir_rx.sony import SONY_12, SONY_15, SONY_20
-from ir_rx.philips import RC5_IR, RC6_M0
-from ir_rx.mce import MCE
-
+try:
+    from ir_rx.print_error import print_error
+    from ir_rx.nec import NEC_8, NEC_16, SAMSUNG
+    from ir_rx.sony import SONY_12, SONY_15, SONY_20
+    from ir_rx.philips import RC5_IR, RC6_M0
+    from ir_rx.mce import MCE
+except ImportError:
+    print('''
+Failed to import /lib/ir_rx!
+Please download from:
+https://github.com/peterhinch/micropython_ir''')
+    
 
 def ir_received(data, addr, ctrl):
     if data < 0:

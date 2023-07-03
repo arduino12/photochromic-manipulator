@@ -3,6 +3,9 @@
 #
 # https://github.com/arduino12/micropython-libs 2023/06/17
 #
+
+__version__ = '1.0.0'
+
 from machine import PWM
 
 
@@ -37,6 +40,9 @@ class Servo:
 
 
 if __name__ == '__main__':
+
+    print('\nTest servo', __version__)
+
     from machine import Pin
     from time import sleep_ms
     from math import sin, radians
