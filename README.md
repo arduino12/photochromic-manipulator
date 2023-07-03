@@ -18,7 +18,7 @@ The UV-LED converts an electric current into UV light.
 2. Learn the basics from the [**presentation**](https://docs.google.com/presentation/d/1GHex3-h8UOdAG93ix5lFpUwPYDLUTp-qcYMy1NBWBzI/) and visit some of it's links.
 3. View [**S2-Mini schematics**](https://www.wemos.cc/en/latest/_static/files/sch_s2_mini_v1.0.0.pdf) and [**pm_v2**](https://drive.google.com/file/d/1oIQLA3CALWdbSq6uK5VD0ayfpmH0RfYR/view) schematics.
 ### Software and Firmware
-* See a video of all the following steps.
+## [**!! See a video of all the following steps !!**](https://drive.google.com/file/d/1aEj5KBWeWXW5ZsfGAlvBMZWhSd8E85TE/view?usp=drive_link)
 1. Install a MicroPython IDE, lets go with [**Thonny IDE**](https://thonny.org/). (here are [other options](https://randomnerdtutorials.com/micropython-ides-esp32-esp8266/) FYI).
 2. Download MicroPython [**LOLIN_S2_MINI.bin**](https://micropython.org/resources/firmware/LOLIN_S2_MINI-20230426-v1.20.0.bin) firmware file for our [ESP32-S2 microcontroller](https://www.wemos.cc/en/latest/s2/s2_mini.html). (taken from [here](https://micropython.org/download/LOLIN_S2_MINI/)).  
 (Use [**LOLIN_S2_MINI_ESPNOW.bin**](https://github.com/glenn20/micropython-espnow-images/raw/main/20230427-v1.20.0-espnow-2-gcc4c716f6/firmware-esp32-LOLIN_S2_MINI.bin) firmware file instead if you want suppont for the `espnow` example).
