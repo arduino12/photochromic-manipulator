@@ -10,5 +10,12 @@ from machine import Timer
 from gc import collect
 
 
-def init_timer_collect(seconds=60):
-    return Timer(-1, period=seconds * 1000, mode=Timer.PERIODIC, callback=lambda _: collect())
+_timer_collect = Timer(-1)
+
+
+def set_timer_collect(is_enabled, seconds=60):
+    if is_enabled:
+        _timer_collect.init(period=seconds * 1000, mode=Timer.PERIODIC,
+                            callback=lambda _: collect())
+    else:
+        _timer_collect.deinit()

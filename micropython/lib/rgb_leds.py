@@ -71,8 +71,8 @@ class RgbLeds:
             self.leds[1] = RgbColor(r)
         self.leds.write()
 
-    def fill(self, c=0):
-        self.leds.fill(RgbColor(c))
+    def fill(self, *args):
+        self.leds.fill(RgbColor(*args))
         self.leds.write()
 
     def swap(self):
@@ -80,7 +80,7 @@ class RgbLeds:
         self.leds.write()
     
     def off(self):
-        self.fill()
+        self.fill(0)
 
 
 if __name__ == '__main__':

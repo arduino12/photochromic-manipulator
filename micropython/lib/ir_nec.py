@@ -30,10 +30,13 @@ _NEC_ERROR = const(-2)
 class IR_TX_NEC:
 
     def __init__(self, pin, active_level=True, rmt_id=0):
-        self._rmt = RMT(rmt_id, pin=pin, clock_div=80, tx_carrier=(_NEC_CARRIER, _NEC_DUTY, 1), idle_level=not active_level)
+        self._pin = pin
+        self._idle_level = not active_level
+        self._rmt_id = rmt_id
         self._bits = array('H', 0 for _ in range(_NEC_BITS))
         self._bits_ptr = memoryview(self._bits)
         self._bits_count = 0
+        self.set_enable(True)
 
     def _append(self, *times):
         for t in times:
@@ -63,6 +66,17 @@ class IR_TX_NEC:
             self._append(_NEC_ZERO)
         self._rmt.write_pulses(tuple(self._bits_ptr[0: self._bits_count]))
         return 0
+
+    def set_enable(self, is_enabled):
+        # if is_enabled and str(getattr(self, '_rmt', 'RMT()')) == 'RMT()':
+        if is_enabled and self._pin.value(): # pin read low when RMT use it
+            self._rmt = RMT(self._rmt_id, pin=self._pin, clock_div=80,
+                            tx_carrier=(_NEC_CARRIER, _NEC_DUTY, 1),
+                            idle_level=self._idle_level)
+#             self._pin.value() # fix first bad transmission somehow 
+        else:
+            self._rmt.deinit()
+            self._pin.init(Pin.OUT, value=self._idle_level)
 
 
 class IR_RX_NEC():
@@ -157,8 +171,8 @@ if __name__ == '__main__':
     from time import sleep_ms
 
     ir_rx = IR_RX_NEC(Pin(14)) # IR receiver VS1838B
-    ir_tx = IR_TX_NEC(Pin(33)) # active high IR LED
-    #ir_tx = IR_TX_NEC(Pin(21), active_level=False) # active low IR LED
+    #ir_tx = IR_TX_NEC(Pin(33)) # active high IR LED
+    ir_tx = IR_TX_NEC(Pin(21), active_level=False) # active low IR LED
 
     try:
         print('\ncallback')
@@ -186,3 +200,4 @@ if __name__ == '__main__':
         pass
 
     ir_rx.set_enable(False)
+    ir_tx.set_enable(False)

@@ -22,9 +22,10 @@ from micropython import const
 from machine import Pin, Timer #, TouchPad
 from buzzer import Buzzer
 from servo import Servo
+#from time import sleep, sleep_ms
 from gc import collect
 from rgb_leds import RgbLeds
-from utils import init_timer_collect
+from utils import set_timer_collect
 from ir_nec import IR_RX_NEC, IR_TX_NEC
 
 
@@ -61,9 +62,18 @@ class PM:
         self.btn_l = Pin(BTN_L_PIN, Pin.OUT, drive=Pin.DRIVE_0, value=1)
         self.btn_r = Pin(BTN_R_PIN, Pin.OUT, drive=Pin.DRIVE_0, value=1)
         self.btn_b = Pin(BTN_B_PIN, Pin.OUT, drive=Pin.DRIVE_0, value=1) # PULL_UP doesn't pull enough..
-        self.ir_receiver = IR_RX_NEC(Pin(IR_RECEIVER_PIN))
-        self.ir_transmitter = IR_TX_NEC(Pin(IR_TRANSMITTER_PIN), active_level=False)
-        self.timer_collect = init_timer_collect()
+        self.ir_rx = IR_RX_NEC(Pin(IR_RECEIVER_PIN))
+        self.ir_tx = IR_TX_NEC(Pin(IR_TRANSMITTER_PIN), active_level=False)
+        self.set_enable(True)
+
+    def set_enable(self, is_enabled):
+        set_timer_collect(is_enabled)
+        self.ir_rx.set_enable(is_enabled)
+        self.ir_tx.set_enable(is_enabled)
+        self.buzzer.set_freq(0)
+        self.rgb_leds.off()
+        self.blue_led.off()
+        self.uv_led.off()
 
 
 if __name__ == '__main__':

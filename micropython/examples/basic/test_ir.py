@@ -5,7 +5,8 @@ from ir_nec import IR_RX_NEC, IR_TX_NEC
 
 
 ir_receiver = IR_RX_NEC(Pin(14)) # IR receiver VS1838B
-ir_transmitter = IR_TX_NEC(Pin(33)) # IR LED need to connect externally
+ir_transmitter = IR_TX_NEC(Pin(21), active_level=False)
+#ir_tx = IR_TX_NEC(Pin(33)) # IR LED needs to be connect externally
 
 
 print('''
@@ -22,6 +23,7 @@ try:
 except KeyboardInterrupt:
     pass
 ir_receiver.set_enable(False)
+ir_transmitter.set_enable(False)
 modules.clear() # make sure we can re-import the example!
 print('''
 Done!

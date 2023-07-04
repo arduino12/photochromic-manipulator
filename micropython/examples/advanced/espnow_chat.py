@@ -16,7 +16,6 @@ from time import sleep, sleep_ms
 from machine import unique_id
 from pm import PM
 from ansi import *
-from rgb_leds import RgbColor
 try:
     from secrets import USERNAME
 except ImportError:
@@ -50,7 +49,10 @@ class EspNowChat:
         self._espnow = ESPNow()
         self._espnow.active(True)
         self._espnow.config(timeout_ms=0, buffer=263*10) # rxbuf=buffer
-        self._espnow.add_peer(self._BROADCAST_ADDRESS)
+        try:
+            self._espnow.add_peer(self._BROADCAST_ADDRESS)
+        except: # raise OSError if peer is already registered...
+            pass
         self._ipoll = poll()
         self._ipoll.register(stdin, POLLIN)
         self._pm = PM()
@@ -83,6 +85,16 @@ class EspNowChat:
         elif username is not None and username != self._name:
             return self._espnow_send('/led {} {}'.format(color, username))
         self._pm.rgb_leds.fill(color)
+
+    def _cmd_beep(self, caller, freq='0', username=None):
+        if caller != self._name and username != self._name:
+            return
+        if caller != self._name:
+            print(self._NAME, caller, SGR_END, ' set your buzzer to ', freq, 'Hz', sep='')
+        elif username is not None and username != self._name:
+            return self._espnow_send('/beep {} {}'.format(freq, username))
+        if freq.isdigit():
+            self._pm.buzzer.set_freq(int(freq))
 
     def _handle_command(self, caller, line):
         args = line.split()
@@ -127,6 +139,11 @@ class EspNowChat:
                 sleep_ms(10)
         except KeyboardInterrupt:
             pass
+        self.deinit()
+
+    def deinit(self):
+        self._espnow.active(False)
+        self._pm.set_enable(False)
 
 
 if __name__ == '__main__':
