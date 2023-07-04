@@ -11,7 +11,7 @@
 #  1 Digital temperature sensor.
 #  1 IR receiver (interrupt based- not very reliable..).
 #  1 IR LED (externally connected to enable transmitting IR codes).
-#  1 WiFi (can do remote REPL).
+#  1 WiFi (can do telegram, remote REPL, ESP-Now...).
 #
 # https://github.com/arduino12/photochromic_manipulator 2023/07/04
 #

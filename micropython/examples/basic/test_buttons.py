@@ -18,7 +18,7 @@ try:
         b = btn_b.value()
         l = btn_l.value()
         r = btn_r.value()
-        print('B=', b, ' L=', l, ' R=', r, end='\t\t\r', sep='') # print over the same line
+        print('B=', b, ' L=', l, ' R=', r, end='\t\t\t\t\t\r', sep='') # print over the same line
         sleep_ms(20)
 except KeyboardInterrupt:
     pass

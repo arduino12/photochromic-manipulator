@@ -16,7 +16,7 @@ try:
     while True:
         l = touch_l.read()
         r = touch_r.read()
-        print('L=', l, ' R=', r, end='\t\t\r', sep='') # print over the same line
+        print('L=', l, ' R=', r, end='\t\t\t\t\t\r', sep='') # print over the same line
         sleep_ms(20)
 except KeyboardInterrupt:
     pass

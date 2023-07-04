@@ -14,7 +14,7 @@ Press Ctrl+C to exit test.
 ''')
 try:
     while True:
-        print(thermometer.read_temp_str_c(), end='\t\r', sep='')
+        print(thermometer.read_temp_str_c(), end='\t\t\t\t\t\r', sep='')
         sleep_ms(500)
 except KeyboardInterrupt:
     pass
