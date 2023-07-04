@@ -72,10 +72,16 @@ class EspNowChat:
         self._espnow.send(self._BROADCAST_ADDRESS, self._name + self._SEP + msg)
 
     def _cmd_help(self, *args):
-        print(self._HELP)
+        print(self._HELP, end='')
+        print(sgr_text('Username:', SGR_GREEN, SGR_BOLD), self._name)
 
     def _cmd_led(self, caller, color='black', username=None):
-        print(caller, color, username)
+        if caller != self._name and username != self._name:
+            return
+        if caller != self._name:
+            print(self._NAME, caller, SGR_END, ' set your LEDs to ', color, sep='')
+        elif username is not None and username != self._name:
+            return self._espnow_send('/led {} {}'.format(color, username))
         self._pm.rgb_leds.fill(color)
 
     def _handle_command(self, caller, line):
@@ -113,6 +119,7 @@ class EspNowChat:
         self._input_prompt(False)
         self._cmd_help()
         self._input_prompt(True)
+        self._pm.rgb_leds.fill('blue')
         try:
             while True:
                 self._handle_espnow()
