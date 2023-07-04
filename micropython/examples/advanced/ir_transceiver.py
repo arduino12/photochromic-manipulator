@@ -31,20 +31,20 @@ try:
     while True:
         c = (not pm.btn_l.value()) * 1 + (not pm.btn_r.value()) * 2
         if c and c != last_c:
-            print('Transmited IR address: ', c)
+            print('Transmited IR address:', c)
             pm.ir_tx.transmit(c)
         last_c = c
-            
-        if ir_rx.received():
+
+        if pm.ir_rx.received():
             c, _ = pm.ir_rx.get()
-            print('Received IR address: ', c)
+            print('Received IR address:', c)
             set_leds_color(c)
             beep(440 * c)
 
         sleep_ms(10)
 except KeyboardInterrupt:
     pass
-pm.deinit()
+pm.set_enable(False)
 timer.deinit()
 modules.clear() # make sure we can re-import the example!
 print('''

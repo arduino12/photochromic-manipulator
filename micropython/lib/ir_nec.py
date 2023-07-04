@@ -68,12 +68,13 @@ class IR_TX_NEC:
         return 0
 
     def set_enable(self, is_enabled):
-        # if is_enabled and str(getattr(self, '_rmt', 'RMT()')) == 'RMT()':
-        if is_enabled and self._pin.value(): # pin read low when RMT use it
-            self._rmt = RMT(self._rmt_id, pin=self._pin, clock_div=80,
-                            tx_carrier=(_NEC_CARRIER, _NEC_DUTY, 1),
-                            idle_level=self._idle_level)
-#             self._pin.value() # fix first bad transmission somehow 
+        if is_enabled:
+            # if self._pin.value(): # pin read low when RMT use it
+            if str(getattr(self, '_rmt', 'RMT()')) == 'RMT()':
+                self._rmt = RMT(self._rmt_id, pin=self._pin, clock_div=80,
+                                tx_carrier=(_NEC_CARRIER, _NEC_DUTY, 1),
+                                idle_level=self._idle_level)
+                self._pin.value() # fix first bad transmission somehow 
         else:
             self._rmt.deinit()
             self._pin.init(Pin.OUT, value=self._idle_level)
