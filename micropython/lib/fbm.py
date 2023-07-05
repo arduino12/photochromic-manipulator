@@ -12,10 +12,9 @@ __version__ = '0.0.1'
 
 class FBM(object):
 
-    HOME_POINT = (0, 10)
+    HOME_POINT = (0, 15)
     _SERVO_OFFSET = 45
-    X_MIN, X_MAX, Y_MIN, Y_MAX = -40, 40, 10, 70
-
+    X_MIN, X_MAX, Y_MIN, Y_MAX = -35, 35, 15, 65
 
     def __init__(self, bar0=16, bar1=34, bar2=43):
         self._bar0 = bar0
@@ -29,8 +28,9 @@ class FBM(object):
         self._next_z = []
         self.pm = PM()
         self._last_x = self.HOME_POINT[0]
-        self._last_y = self.HOME_POINT[1]
+        self._last_y = self.HOME_POINT[1] + 30 # so it will go home
         self.auto_draw = True
+        self.move_home()
 
     def set_led(self, draw):
         if draw is None:
@@ -73,8 +73,6 @@ class FBM(object):
 
         r_a = 180 - r_a;
 
-        self._cur_x = x
-        self._cur_y = y
         self.set_axes(l_a, r_a)
 
     def _move_to(self, p_x, p_y, speed):
@@ -92,9 +90,9 @@ class FBM(object):
             sleep_ms(speed);
 
         self.set_axes_fbk(p_x, p_y);
-        sleep_ms(speed);
         self._last_x = p_x;
         self._last_y = p_y;
+        sleep_ms(speed);
 
     def update_blocking(self):
         while self._next_z:
@@ -156,6 +154,7 @@ class FBM(object):
             self._next_y[i] *= scale
 
     def set_enable(self, is_enabled):
+        self.stop()
         self.pm.set_enable(is_enabled)
 
 
@@ -168,7 +167,7 @@ if __name__ == '__main__':
         Y = 20
         W, H = 8, 16
         for i in range(5):
-            fbm.draw_poly(((-W, Y), (W, Y), (W, Y + H), (-W, Y + H)))
+            fbm.draw_poly(((-W, Y), (W, Y), (W, Y+H), (-W, Y+H)))
         fbm.move_home()
     except KeyboardInterrupt:
         pass

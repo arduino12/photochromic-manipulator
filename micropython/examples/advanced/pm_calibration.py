@@ -23,7 +23,7 @@ Connect the arms and screw them to the motors.{0}
 '''.format(SGR_END, sgr(SGR_GREEN, SGR_BOLD, SGR_UNDERLINE),
            sgr(SGR_YELLOW, SGR_BOLD), sgr(SGR_CYAN, SGR_BOLD),
            sgr(SGR_RED, SGR_BOLD)))
-
+fbm.move_home()
 last_c = 0
 try:
     while True:
@@ -31,7 +31,7 @@ try:
         if c and c != last_c:
             print('Press:', c)
             if c == 1:
-                fbm.set_axes(90, 90)
+                fbm._move_to(0, 48, 6)
             elif c == 2:
                 fbm.move_home()
                 Y = 20

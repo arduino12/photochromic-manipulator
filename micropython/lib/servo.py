@@ -11,7 +11,7 @@ from machine import PWM
 
 class Servo:
 
-    def __init__(self, pin, min_us=630, max_us=2400, angles=180):
+    def __init__(self, pin, min_us=630, max_us=2700, angles=180):
         self._min_us = min_us
         self._max_us = max_us
         self._angles = angles
