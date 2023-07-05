@@ -20,8 +20,7 @@ The UV-LED converts an electric current into UV light.
 ### Software and Firmware
 ## [**!! See a video of all the following steps !!**](https://drive.google.com/file/d/1aEj5KBWeWXW5ZsfGAlvBMZWhSd8E85TE/view?usp=drive_link)
 1. Install a MicroPython IDE, lets go with [**Thonny IDE**](https://thonny.org/). (here are [other options](https://randomnerdtutorials.com/micropython-ides-esp32-esp8266/) FYI).
-2. Download MicroPython [**LOLIN_S2_MINI.bin**](https://micropython.org/resources/firmware/LOLIN_S2_MINI-20230426-v1.20.0.bin) firmware file for our [ESP32-S2 microcontroller](https://www.wemos.cc/en/latest/s2/s2_mini.html). (taken from [here](https://micropython.org/download/LOLIN_S2_MINI/)).  
-(Use [**LOLIN_S2_MINI_ESPNOW.bin**](https://github.com/glenn20/micropython-espnow-images/raw/main/20230427-v1.20.0-espnow-2-gcc4c716f6/firmware-esp32-LOLIN_S2_MINI.bin) firmware file instead if you want suppont for the `espnow` example).
+2. Download MicroPython [**LOLIN_S2_MINI_ESPNOW.bin**](https://github.com/glenn20/micropython-espnow-images/raw/main/20230427-v1.20.0-espnow-2-gcc4c716f6/firmware-esp32-LOLIN_S2_MINI.bin) firmware file.
 3. **Press the small boot button (marked "0" on PCB)** while connecting the microcontroller to computer via USB-C cable.
 4. [Flash the firmware file to the microcontroller using Thonny](https://linuxhint.com/micropython-esp32-thonny-ide/#2), wait for "Done" message.  
   **4.1** Press the tribar [≡] button and select `Select local MicroPython image...` and select `LOLIN_S2_MINI_ESPNOW.bin`.  
