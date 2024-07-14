@@ -3,8 +3,8 @@ from machine import Pin, TouchPad
 from time import sleep_ms
 
 
-touch_l = TouchPad(Pin(12)) # Touch-Pads pins can be 1-14!
-touch_r = TouchPad(Pin(4)) # PCB V2 connected to pin 34 so need soldering to pin 4!
+touch_l = TouchPad(Pin(5))
+touch_r = TouchPad(Pin(4))
 
 
 print('''

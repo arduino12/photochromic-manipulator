@@ -172,8 +172,8 @@ if __name__ == '__main__':
     from time import sleep_ms
 
     ir_rx = IR_RX_NEC(Pin(14)) # IR receiver VS1838B
-    #ir_tx = IR_TX_NEC(Pin(33)) # active high IR LED
-    ir_tx = IR_TX_NEC(Pin(21), active_level=False) # active low IR LED
+    ir_tx = IR_TX_NEC(Pin(36)) # active high IR LED
+    #ir_tx = IR_TX_NEC(Pin(21), active_level=False) # active low IR LED
 
     try:
         print('\ncallback')

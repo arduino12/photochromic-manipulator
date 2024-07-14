@@ -29,14 +29,14 @@ from utils import set_timer_collect
 from ir_nec import IR_RX_NEC, IR_TX_NEC
 
 
-HW_VERSION = const(2)
+HW_VERSION = const(3)
 SW_VERSION = const(1)
 
 SDA_PIN = const(8)
 SCL_PIN = const(10)
 BTN_B_PIN = const(0)
-BTN_L_PIN = const(12) # Touch-Pads pins can be 1-14!
-BTN_R_PIN = const(34) # Kit V2 connected to pin 34 so need bridging to pin 4!
+BTN_L_PIN = const(12)
+BTN_R_PIN = const(34)
 UV_LED_PIN = const(33)
 SERVO_L_PIN = const(7)
 SERVO_R_PIN = const(6)
@@ -45,7 +45,10 @@ BUZZER_B_PIN = const(13)
 NEOPIXEL_PIN = const(9)
 BLUE_LED_PIN = const(15)
 IR_RECEIVER_PIN = const(14)
-IR_TRANSMITTER_PIN = const(21) # need to connect external IR LED!
+IR_TRANSMITTER_PIN = const(36)
+TOUCH_L_PIN = const(5)
+TOUCH_R_PIN = const(4)
+SERVO_OFFSET = const(45)
 
 
 class PM:
@@ -57,8 +60,8 @@ class PM:
         self.buzzer = Buzzer(Pin(BUZZER_A_PIN), Pin(BUZZER_B_PIN))
         self.servo_l = Servo(Pin(SERVO_L_PIN))
         self.servo_r = Servo(Pin(SERVO_R_PIN))
-        # self.touch_l = TouchPad(Pin(BTN_L_PIN))
-        # self.touch_r = TouchPad(Pin(BTN_R_PIN))
+        self.touch_l = TouchPad(Pin(TOUCH_L_PIN))
+        self.touch_r = TouchPad(Pin(TOUCH_R_PIN))
         self.btn_l = Pin(BTN_L_PIN, Pin.OUT, drive=Pin.DRIVE_0, value=1)
         self.btn_r = Pin(BTN_R_PIN, Pin.OUT, drive=Pin.DRIVE_0, value=1)
         self.btn_b = Pin(BTN_B_PIN, Pin.OUT, drive=Pin.DRIVE_0, value=1) # PULL_UP doesn't pull enough..

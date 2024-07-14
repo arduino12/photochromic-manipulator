@@ -50,7 +50,7 @@ if __name__ == '__main__':
     from machine import Pin
     from time import sleep_ms
 
-    buzzer = Buzzer(Pin(2), Pin(3))
+    buzzer = Buzzer(Pin(11), Pin(13))
 
     try:
         for i in range(6):
