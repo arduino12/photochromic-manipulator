@@ -34,8 +34,8 @@ The UV-LED converts an electric current into UV light.
   **The microcontroller's MicroPython REPL prompt should appear in Thonny's terminal!**
 4. Download this [repository](https://github.com/arduino12/photochromic-manipulator/archive/refs/heads/main.zip) and extract it (delete the compressed zip file).
 5. Upload the content of micropython folder to the microcontroller using Thonny.  
-   **5.1** Press View (top menu-bar) and select `Files`, do the same with `Object inspector`.
-   **5.2** Navigate to the path of the unzipped `photochromic-manipulator/micropython`.
-   **5.3** Select all files -> right-click -> `Upload to /` and make sure all were copied to the device. 
+   **5.1** Press View (top menu-bar) and select `Files`, do the same with `Object inspector`.  
+   **5.2** Navigate to the path of the unzipped `photochromic-manipulator/micropython`.  
+   **5.3** Select all files -> right-click -> `Upload to /` and make sure all were copied to the device.  
 6. Run an example by writing `from examples.basic import test_leds` and press Enter,  
 can also run by opening the file and pressing F5.
