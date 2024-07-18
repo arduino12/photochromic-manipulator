@@ -1,19 +1,9 @@
-try:
-    from espnow import ESPNow
-except ImportError:
-    print('''
-Failed to import espnow!
-Please use MicroPython v1.20 with espnow:
-https://github.com/glenn20/micropython-espnow-images/blob/main/20230427-v1.20.0-espnow-2-gcc4c716f6/firmware-esp32-LOLIN_S2_MINI.bin
-Or the latest MicroPython version:
-https://micropython.org/resources/firmware/LOLIN_S2_MINI-20230623-unstable-v1.20.0-243-gd93316fe3.bin
-''')
-    raise SystemExit()
 from sys import modules, stdin, stdout
 from network import WLAN, STA_IF
 from select import poll, POLLIN
 from time import sleep, sleep_ms
 from machine import unique_id
+from espnow import ESPNow
 from pm import PM
 from ansi import *
 try:
@@ -48,7 +38,7 @@ class EspNowChat:
         sta.disconnect()
         self._espnow = ESPNow()
         self._espnow.active(True)
-        self._espnow.config(timeout_ms=0, buffer=263*10) # rxbuf=buffer
+        self._espnow.config(timeout_ms=0, rxbuf=263*10)
         try:
             self._espnow.add_peer(self._BROADCAST_ADDRESS)
         except: # raise OSError if peer is already registered...

@@ -19,7 +19,7 @@
 __version__ = '1.0.0'
 
 from micropython import const
-from machine import Pin, Timer #, TouchPad
+from machine import Pin, Timer, TouchPad
 from buzzer import Buzzer
 from servo import Servo
 #from time import sleep, sleep_ms

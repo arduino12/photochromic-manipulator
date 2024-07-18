@@ -15,24 +15,27 @@ The UV-LED converts an electric current into UV light.
 ## Getting started
 ### Hardware
 1. Assemble the kit by following the assembly guide.
-2. Learn the basics from the [**presentation**](https://docs.google.com/presentation/d/1GHex3-h8UOdAG93ix5lFpUwPYDLUTp-qcYMy1NBWBzI/) and visit some of it's links.
-3. View [**S2-Mini schematics**](https://www.wemos.cc/en/latest/_static/files/sch_s2_mini_v1.0.0.pdf) and [**pm_v2**](https://drive.google.com/file/d/1oIQLA3CALWdbSq6uK5VD0ayfpmH0RfYR/view) schematics.
+2. Learn the basics from the [**presentation**](https://docs.google.com/presentation/d/10CCbnRxoIO8JoA44LrwucI05HlEwSopz_qcIy2chwl0) and visit some of it's links.
+3. View [**S2-Mini schematics**](https://www.wemos.cc/en/latest/_static/files/sch_s2_mini_v1.0.0.pdf) and [**pm_v2**](https://drive.google.com/file/d/1Le-dcOo2rCa9OkG9LgLotUU8tVFwa3I2/view) schematics.
 ### Software and Firmware
 ## [**!! See a video of all the following steps !!**](https://drive.google.com/file/d/1aEj5KBWeWXW5ZsfGAlvBMZWhSd8E85TE/view?usp=drive_link)
 1. Install a MicroPython IDE, lets go with [**Thonny IDE**](https://thonny.org/). (here are [other options](https://randomnerdtutorials.com/micropython-ides-esp32-esp8266/) FYI).
-2. Download MicroPython [**LOLIN_S2_MINI_ESPNOW.bin**](https://github.com/glenn20/micropython-espnow-images/raw/main/20230427-v1.20.0-espnow-2-gcc4c716f6/firmware-esp32-LOLIN_S2_MINI.bin) firmware file.
-3. **Press the small boot button (marked "0" on PCB)** while connecting the microcontroller to computer via USB-C cable.
-4. [Flash the firmware file to the microcontroller using Thonny](https://linuxhint.com/micropython-esp32-thonny-ide/#2), wait for "Done" message.  
-  **4.1** Press the tribar [≡] button and select `Select local MicroPython image...` and select `LOLIN_S2_MINI_ESPNOW.bin`.  
-  **4.2** Press the tribar [≡] button and select `Show install options` to set `Target address` to `0x1000...`).  
-  **4.3** Press the `Install` button!**
-6. **Press the small reset button (marked "RST" on PCB)**.
-7. Press the red "Stop" button in Thonny - now the microcontroller MicroPython REPL prompt should appear in Thonny terminal!
-8. Download this [repository](https://github.com/arduino12/photochromic-manipulator/archive/refs/heads/main.zip) and extract it (delete the compressed zip file).
-9. Upload the content of micropython folder to the microcontroller using Thonny.  
-   **9.1** Press View (top menu-bar) and select `Files`, do the same with `Object inspector`.
-   **9.2** Navigate to the path of the unzipped `photochromic-manipulator/micropython`.
-   **9.3** Select all files -> right-click -> `Upload to /` and make sure all were copied to the device. 
-11. Run an example by writing `from examples.basic import test_leds` and press Enter,  
+2. Open Thonny.exe (press WinKey and type `Thonny`).  
+3. Flash the ESP32-S2 Mini MicroPython firmware v1.23.0 to the microcontroller using Thonny (or [manually](https://micropython.org/download/ESP32_GENERIC_S2/)).  
+  **3.1** **Press the small boot button (marked "0" on the PCB)** while connecting the microcontroller to your computer via a USB-C cable.  
+  **3.2** Press toolbar's `Run` -> `Configure interpreter`.  
+  **3.3** Select `MicroPython (ESP32)` on the second line.  
+  **3.4** Press the bottom `Install or update MicroPython (esptool)`.  
+  **3.5** Select `MicroPython family` = `ESP32-S2`.  
+  **3.6** Select `variant` = `Wemos S2 mini`.  
+  **3.7** Press the `Install` button and wait for "Done" message!  
+  **3.8** **Press the small reset button (marked "RST" on the PCB).**  
+  **3.9** Close the sub dialog (press ESC) and press `OK` on the main dialog (press ENTER).  
+  **The microcontroller's MicroPython REPL prompt should appear in Thonny's terminal!**
+4. Download this [repository](https://github.com/arduino12/photochromic-manipulator/archive/refs/heads/main.zip) and extract it (delete the compressed zip file).
+5. Upload the content of micropython folder to the microcontroller using Thonny.  
+   **5.1** Press View (top menu-bar) and select `Files`, do the same with `Object inspector`.
+   **5.2** Navigate to the path of the unzipped `photochromic-manipulator/micropython`.
+   **5.3** Select all files -> right-click -> `Upload to /` and make sure all were copied to the device. 
+6. Run an example by writing `from examples.basic import test_leds` and press Enter,  
 can also run by opening the file and pressing F5.
-
