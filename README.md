@@ -18,7 +18,7 @@ The UV-LED converts an electric current into UV light.
 2. Learn the basics from the [**presentation**](https://docs.google.com/presentation/d/10CCbnRxoIO8JoA44LrwucI05HlEwSopz_qcIy2chwl0) and visit some of it's links.
 3. View [**S2-Mini schematics**](https://www.wemos.cc/en/latest/_static/files/sch_s2_mini_v1.0.0.pdf) and [**pm_v3**](https://drive.google.com/file/d/1Le-dcOo2rCa9OkG9LgLotUU8tVFwa3I2/view) schematics.
 ### Software and Firmware
-## [**!! See a video of all the following steps !!**](https://drive.google.com/file/d/1aEj5KBWeWXW5ZsfGAlvBMZWhSd8E85TE/view?usp=drive_link)
+## [**!! See a video of all the following steps !!**](https://drive.google.com/file/d/1zq4tPx_3L1xqlrCyhS9WZJXLbCVjM0xy/view)
 1. Install a MicroPython IDE, lets go with [**Thonny IDE**](https://thonny.org/). (here are [other options](https://randomnerdtutorials.com/micropython-ides-esp32-esp8266/) FYI).
 2. Open Thonny.exe (press WinKey and type `Thonny`).  
 3. Flash the ESP32-S2 Mini MicroPython firmware v1.23.0 to the microcontroller using Thonny (or [manually](https://micropython.org/download/ESP32_GENERIC_S2/)).  
