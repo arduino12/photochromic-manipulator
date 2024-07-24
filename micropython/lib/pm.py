@@ -7,16 +7,17 @@
 #  1 UV LED.
 #  1 Blue LED.
 #  1 Piezoelectric buzzer.
-#  3 Push-Buttons (1 boot, 2 also capacitive touch pads).
+#  3 Push-Buttons (1 boot marked "0" on purple PCB).
+#  2 Capacitive touch pads.
 #  1 Digital temperature sensor.
 #  1 IR receiver (interrupt based- not very reliable..).
-#  1 IR LED (externally connected to enable transmitting IR codes).
+#  1 IR LED (low power).
 #  1 WiFi (can do telegram, remote REPL, ESP-Now...).
 #
-# https://github.com/arduino12/photochromic_manipulator 2023/07/04
+# https://github.com/arduino12/photochromic_manipulator 2024/07/24
 #
 
-__version__ = '1.0.0'
+__version__ = '3.0.0'
 
 from micropython import const
 from machine import Pin, Timer, TouchPad
@@ -27,6 +28,7 @@ from gc import collect
 from rgb_leds import RgbLeds
 from utils import set_timer_collect
 from ir_nec import IR_RX_NEC, IR_TX_NEC
+from thermometer import Thermometer
 
 
 HW_VERSION = const(3)
@@ -67,13 +69,14 @@ class PM:
         self.btn_b = Pin(BTN_B_PIN, Pin.OUT, drive=Pin.DRIVE_0, value=1) # PULL_UP doesn't pull enough..
         self.ir_rx = IR_RX_NEC(Pin(IR_RECEIVER_PIN))
         self.ir_tx = IR_TX_NEC(Pin(IR_TRANSMITTER_PIN), active_level=False)
+        self.thermometer = Thermometer(1, Pin(SCL_PIN), Pin(SDA_PIN))
         self.set_enable(True)
 
     def set_enable(self, is_enabled):
         set_timer_collect(is_enabled)
         self.ir_rx.set_enable(is_enabled)
         self.ir_tx.set_enable(is_enabled)
-        self.buzzer.set_freq(0)
+        self.buzzer.off()
         self.rgb_leds.off()
         self.blue_led.off()
         self.uv_led.off()

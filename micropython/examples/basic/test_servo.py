@@ -10,8 +10,8 @@ servo = Servo(Pin(6))
 
 print('''
 Test Servo:
-Moves servo motor in a sinusoidal way.
-Press Ctrl+C to exit test.
+Moves a servo motor in a sinusoidal way.
+Press Ctrl-C to exit the test.
 ''')
 try:
     while True:
@@ -24,5 +24,5 @@ servo.set_enable(False)
 modules.clear() # make sure we can re-import the example!
 print('''
 Done!
-Can press ctrl-d to soft-reset.
+Can press Ctrl-D to soft-reset.
 ''')

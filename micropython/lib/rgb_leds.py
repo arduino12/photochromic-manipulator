@@ -1,6 +1,5 @@
 #
 # rgb_leds.py - MicroPython library for driving Neopixel RGB LEDs.
-# Supports color formats and led effects,
 #
 # https://github.com/arduino12/micropython-libs 2023/07/04
 #

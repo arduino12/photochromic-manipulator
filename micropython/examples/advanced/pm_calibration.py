@@ -19,7 +19,7 @@ print('''
 Connect the arms and screw them to the motors.{0}
 {3}Press 'B' pushbutton to draw test patterns.{0}
 
-{4}Press ctrl-c to exit test.{0}
+{4}Press Ctrl-C to exit.{0}
 '''.format(SGR_END, sgr(SGR_GREEN, SGR_BOLD, SGR_UNDERLINE),
            sgr(SGR_YELLOW, SGR_BOLD), sgr(SGR_CYAN, SGR_BOLD),
            sgr(SGR_RED, SGR_BOLD)))
@@ -46,5 +46,5 @@ fbm.set_enable(False)
 modules.clear() # make sure we can re-import the example!
 print('''
 Done!
-Can press ctrl-d to soft-reset.
+Can press Ctrl-D to soft-reset.
 ''')

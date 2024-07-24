@@ -25,7 +25,7 @@ class EspNowChat:
  {2}/beep\t{4}<freq=440> <username=you> {3}Beep a user buzzer.
  {2}/led\t{4}<color=black> <username=you> {3}Set a user LED color.
  {3}Any other text will be sent to all chat users.
-{5}Press ctrl-c to exit.{0}
+{5}Press Ctrl-C to exit.{0}
 '''.format(SGR_END, sgr(SGR_GREEN, SGR_BOLD, SGR_UNDERLINE),
            sgr(SGR_YELLOW, SGR_BOLD), sgr(SGR_NORMAL, SGR_CYAN + SGR_BRIGHT),
            sgr(SGR_NOT_BOLD), sgr(SGR_RED, SGR_BOLD))
@@ -76,7 +76,7 @@ class EspNowChat:
             return self._espnow_send('/led {} {}'.format(color, username))
         self._pm.rgb_leds.fill(color)
 
-    def _cmd_beep(self, caller, freq='0', username=None):
+    def _cmd_beep(self, caller, freq='440', username=None):
         if caller != self._name and username != self._name:
             return
         if caller != self._name:
@@ -84,7 +84,7 @@ class EspNowChat:
         elif username is not None and username != self._name:
             return self._espnow_send('/beep {} {}'.format(freq, username))
         if freq.isdigit():
-            self._pm.buzzer.set_freq(int(freq))
+            self._pm.buzzer.beep(int(freq), -1000) # -1000ms = non-blocking
 
     def _handle_command(self, caller, line):
         args = line.split()
@@ -144,5 +144,5 @@ if __name__ == '__main__':
 modules.clear() # make sure we can re-import the example!
 print('''
 Done!
-Can press ctrl-d to soft-reset.
+Can press Ctrl-D to soft-reset.
 ''')

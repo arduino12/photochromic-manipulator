@@ -1,11 +1,9 @@
 from sys import modules
-from machine import Timer
 from time import sleep_ms
 from pm import PM
 
 
 pm = PM()
-timer = Timer(-1)
 
 
 def set_leds_color(c):
@@ -16,16 +14,11 @@ def set_leds_color(c):
     ))
 
 
-def beep(freq, duration=100):
-    pm.buzzer.set_freq(freq)
-    timer.init(period=duration, mode=Timer.ONE_SHOT, callback=lambda t: pm.buzzer.set_freq(0))
-
-
 last_c = 0
 print('''
 IR Transceiver - each button press sends an IR NEC signal,
 received IR NEC signals sets the LEDs color and buzzer beeps.
-Press ctrl-c to exit test.
+Press Ctrl-C to exit the test.
 ''')
 try:
     while True:
@@ -39,15 +32,14 @@ try:
             c, _ = pm.ir_rx.get()
             print('Received IR address:', c)
             set_leds_color(c)
-            beep(440 * c)
+            pm.buzzer.beep(440 * c, -100) # -100ms = non-blocking
 
         sleep_ms(10)
 except KeyboardInterrupt:
     pass
 pm.set_enable(False)
-timer.deinit()
 modules.clear() # make sure we can re-import the example!
 print('''
 Done!
-Can press ctrl-d to soft-reset.
+Can press Ctrl-D to soft-reset.
 ''')

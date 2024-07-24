@@ -1,12 +1,5 @@
-# This file is executed on every boot (including wake-boot from deepsleep)
-#import esp
-#esp.osdebug(None)
-#import webrepl
-#webrepl.start()
-#from examples.basic import test_leds
-#print(
-#'''
-#╔═══════════════════════════════════════════════╗
-#║ !!! Press ctrl-c to exit into interpreter !!! ║
-#╚═══════════════════════════════════════════════╝
-#''')
+# This file is executed on every boot-
+# you can import an example here in order to run it on startup:
+# (un-commenting the folloing line by pressing ctrl-3 while on it)
+
+# from examples.basic import test_leds

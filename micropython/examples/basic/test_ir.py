@@ -9,9 +9,11 @@ ir_transmitter = IR_TX_NEC(Pin(36))
 
 
 print('''
-Test IR NEC protocol transmission and reception:
+Test IR:
+Demonstrate infra red NEC protocol transmission and reception.
 Transmit counter value every half a second.
 Print received values.
+Press Ctrl-C to exit the test.
 ''')
 try:
     ir_receiver.set_callback(lambda address, data: print('IR Received:', address, data))
@@ -26,5 +28,5 @@ ir_transmitter.set_enable(False)
 modules.clear() # make sure we can re-import the example!
 print('''
 Done!
-Can press ctrl-d to soft-reset.
+Can press Ctrl-D to soft-reset.
 ''')

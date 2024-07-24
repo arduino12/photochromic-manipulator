@@ -92,7 +92,7 @@ def police(duration):
 print('''
 Test LEDs:
 LED effects using 2 RGB LEDs, 1 UV LED and 1 blue LED.
-Press ctrl-c to exit test.
+Press Ctrl-C to exit the test.
 ''')
 try:
     while True:
@@ -109,5 +109,5 @@ rgb_leds_fill(BLACK)
 modules.clear() # make sure we can re-import the example!
 print('''
 Done!
-Can press ctrl-d to soft-reset.
+Can press Ctrl-D to soft-reset.
 ''')

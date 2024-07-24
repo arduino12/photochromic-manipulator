@@ -11,19 +11,19 @@ btn_r = Pin(34, Pin.OUT, drive=Pin.DRIVE_0, value=1)
 print('''
 Test Buttons:
 Prints button states (pressed=0, released=1).
-Press ctrl-c to exit test.
+Press Ctrl-C to exit the test.
 ''')
 try:
     while True:
         b = btn_b.value()
         l = btn_l.value()
         r = btn_r.value()
-        print('B=', b, ' L=', l, ' R=', r, end='\t\t\t\t\t\r', sep='') # print over the same line
+        print('B=', b, ' L=', l, ' R=', r, end='\t\t\r', sep='') # print over the same line
         sleep_ms(20)
 except KeyboardInterrupt:
     pass
 modules.clear() # make sure we can re-import the example!
 print('''
 Done!
-Can press ctrl-d to soft-reset.
+Can press Ctrl-D to soft-reset.
 ''')
