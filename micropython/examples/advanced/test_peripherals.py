@@ -12,7 +12,7 @@ _LOG_G = sgr(SGR_GREEN, SGR_BOLD)
 _TEST = sgr(SGR_CYAN, SGR_BOLD)
 _PROMPT = sgr_text('Test[{:02}]> ', SGR_BLUE, SGR_BOLD)
 _PR_FMT = 'P[{1}{{}}{0}] R[{1}{{}}{0}] T[{1}{{}}{0}]'.format(SGR_END, _LOG_W)
-_test_id = 1
+_test_results = []
 
 
 pm = PM()
@@ -24,15 +24,15 @@ def test_log(_sgr, line, end='\n'):
 
 def test_start(line):
     global _test_prompt
-    _test_prompt = _PROMPT.format(_test_id)
+    _test_prompt = _PROMPT.format(len(_test_results) + 1)
     test_log(_TEST, line)
 
 
-def test_end(error_id):
-    global _test_id
-    test_log(_LOG_E if error_id else _LOG_G,
-             'Failed!' if error_id else 'Passed!', end='\n\n')
-    _test_id += 1
+def test_end(result):
+    global _test_results
+    test_log(_LOG_E if result else _LOG_G,
+             'Failed!' if result else 'Passed!', end='\n\n')
+    _test_results.append(result)
 
 
 print('''
@@ -45,8 +45,11 @@ try:
     test_start('IR')
     ir_tx_byte = randrange(256)
     test_log(_LOG_I, 'Sent NEC code 0x{:02x}'.format(ir_tx_byte))
-    pm.ir_tx.transmit(ir_tx_byte)
-    sleep_ms(200)
+    for i in range(3):
+        pm.ir_tx.transmit(ir_tx_byte)
+        sleep_ms(200)
+        if pm.ir_rx.received():
+            break
     if pm.ir_rx.received():
         ir_rx_byte, _ = pm.ir_rx.get()
         if ir_rx_byte == ir_tx_byte:
@@ -104,7 +107,8 @@ try:
     test_end(ret)
 
     test_start('RGB LEDs and buzzer')
-    test_log(_LOG_W, 'Verify LEDs red, green and blue colors and buzzer beeps...')
+    test_log(_LOG_W, 'Verify LEDs red, green and blue colors and buzzer beeps...',
+             end='\n\n')
     for i in range(3):
         pm.buzzer.beep(440 + i * 440)
         for c in ('red', 'green', 'blue'):
@@ -112,6 +116,11 @@ try:
             sleep_ms(500)
     pm.rgb_leds.off()
     pm.buzzer.off()
+    
+    a = len(_test_results)
+    b = _test_results.count(0)
+    print(_LOG_G if a == b else _LOG_E,
+          '{}/{} test passed!'.format(b, a), SGR_END, sep='')
 
 except KeyboardInterrupt:
     pass
