@@ -6,7 +6,7 @@
 # https://github.com/arduino12/micropython-libs 2023/06/17
 #
 
-__version__ = '2.0.0'
+__version__ = '2.0.1'
 
 from machine import Pin, PWM, mem32
 from time import sleep_ms
@@ -21,6 +21,8 @@ NOTE = [
     440, 493.9, 261.6, 293.7, 329.6, 349.2, 392,
     0, 466.2, 0, 277.2, 311.1, 0, 370, 415.3, 0,
 ]
+
+NOTES = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
 
 # https://www.espressif.com/sites/default/files/documentation/esp32-s2_technical_reference_manual_en.pdf#page=186
 _GPIO_FUNCn_OUT_SEL_CFG_REG = const(0x3F404554) #  (n: 0-53) (0x3F404000+0x0554+4*n)
@@ -160,6 +162,16 @@ class Buzzer:
         if ms > 0:
             sleep_ms(ms)
             self.off()
+
+    def note(self, note, ms=0):
+        n = NOTES.index(note[0:-1])
+
+        if (n < 3):
+            n += 12
+
+        n += (int(note[-1]) - 1) * 12
+
+        self.beep(440 * (2 ** (keyNumber- 48) / 12), ms)
 
     def _note_timer_cb(self, _):
         with self._lock:

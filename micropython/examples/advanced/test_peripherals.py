@@ -1,6 +1,7 @@
 from sys import modules
 from random import randrange
 from time import sleep_ms, time
+from esp32 import mcu_temperature
 from pm import PM
 from ansi import *
 
@@ -41,7 +42,31 @@ Performs a hardware self test for this PCB.
 Press Ctrl-C to exit the test.
 ''')
 try:
-    ret = 0
+    test_start('MCU Temperature')
+    temp = mcu_temperature()
+    if 10 <= temp <= 50:
+        test_log(_LOG_I, 'MCU Temperature {}°C'.format(temp))
+        ret = 0
+    else:
+        test_log(_LOG_W, 'MCU Temperature out of range {}°C'.format(temp))
+        ret = 1
+    test_end(ret)
+
+    test_start('Thermometer')
+    try:
+        temp = pm.thermometer.read_temp_c()
+    except Exception:
+        test_log(_LOG_E, 'No thermometer was detected!')
+        ret = 2
+    else:
+        if 10 <= temp <= 50:
+            test_log(_LOG_I, 'Thermometer read {:0.1f}°C'.format(temp))
+            ret = 0
+        else:
+            test_log(_LOG_W, 'Thermometer read out of range {:0.1f}°C'.format(temp))
+            ret = 1
+    test_end(ret)
+    
     test_start('IR')
     ir_tx_byte = randrange(256)
     test_log(_LOG_I, 'Sent NEC code 0x{:02x}'.format(ir_tx_byte))
@@ -61,21 +86,6 @@ try:
     else:
         test_log(_LOG_E, 'No NEC code was received!')
         ret = 2
-    test_end(ret)
-
-    test_start('Thermometer')
-    try:
-        temp = pm.thermometer.read_temp_c()
-    except Exception:
-        test_log(_LOG_E, 'No thermometer was detected!')
-        ret = 2
-    else:
-        if 10 <= temp <= 50:
-            test_log(_LOG_I, 'Thermometer read {0:.2f}°C'.format(temp))
-            ret = 0
-        else:
-            test_log(_LOG_W, 'Thermometer read out of range {0:.2f}°C'.format(temp))
-            ret = 1
     test_end(ret)
 
     def pr_test(l_func, r_func):

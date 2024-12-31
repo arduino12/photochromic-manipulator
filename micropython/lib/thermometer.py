@@ -5,7 +5,7 @@
 # https://github.com/arduino12/micropython-libs 2023/06/24
 #
 
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 
 from machine import I2C
 
@@ -26,7 +26,7 @@ class Thermometer:
         return ((v & 0x3ff) - (v & 0x400)) * 0.125
 
     def read_temp_str_c(self):
-        return '{0:.2f}°C'.format(self.read_temp_c())
+        return '{:0.2f}°C'.format(self.read_temp_c())
 
 
 if __name__ == '__main__':
