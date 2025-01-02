@@ -1,7 +1,4 @@
 from sys import modules
-from math import degrees, sin, cos
-from time import sleep, sleep_ms
-# from fbm import FBM
 from pm import PM, SERVO_ANGLES, SERVO_OFFSET
 from ansi import *
 from utils import set_param
@@ -9,11 +6,10 @@ from secrets import SERVO_US
 
 
 _STEP = sgr(SGR_CYAN, SGR_BOLD)
-_SERVO_CAL_DEG = const(43) # arm is 34mm, add 10mm from its center to edge
 pm = PM()
 
 
-def interactive_calibration():
+try:
     servo_us = [2030, 2080, 970, 1000] # lh rv lv rh
     print('''
 {1}Photochromic manipulator calibration:{0}
@@ -93,10 +89,6 @@ def interactive_calibration():
     input() # wait for ENTER
 
     set_param('SERVO_US', [l_min_us, l_max_us, r_min_us, r_max_us])
-
-
-try:
-    interactive_calibration()
 except KeyboardInterrupt:
     pass
 pm.set_enable(False)
