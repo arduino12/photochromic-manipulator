@@ -4,7 +4,7 @@
 # https://github.com/arduino12/micropython-libs 2023/07/04
 #
 
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 
 from machine import Timer
 from gc import collect
@@ -12,6 +12,7 @@ from network import WLAN, STA_IF
 from time import sleep_ms
 
 
+_PARAM_PATH = './secrets.py'
 _timer_collect = Timer(-1)
 
 
@@ -39,3 +40,30 @@ def wifi_connect(ssid, password, timeout_ms=6000):
         print(' done!')
     print('WiFi: IP address:', sta_if.ifconfig()[0])
     return 0
+
+
+def get_param(key, default=None):
+    with open(_PARAM_PATH, 'r') as f:
+        for l in f:
+            s = l.split('=', 1)
+            if len(s) == 2 and s[0].strip() == key:
+                return eval(s[1].strip())
+    return default
+
+
+def set_param(key, value):
+    lines = []
+    line = '{} = {}\n'.format(key, repr(value))
+    with open(_PARAM_PATH, 'r') as f:
+        for l in f:
+            s = l.split('=', 1)
+            if len(s) == 2 and s[0].strip() == key:
+                lines.append(line)
+                line = None
+            else:
+                lines.append(l)
+    if line:
+        lines.append(line)
+    with open(_PARAM_PATH, 'w') as f:
+        for l in lines:
+            f.write(l)

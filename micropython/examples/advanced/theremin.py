@@ -10,7 +10,7 @@ print('''
 Theremin:
 Emulates a theremin musical instrument.
 Prints touch-pads states (pressed=large value, released=small value).
-Press Ctrl-C to exit the test.
+Press Ctrl-C to exit.
 ''')
 try:
     l_base = int(pm.touch_l.read() * 0.99)

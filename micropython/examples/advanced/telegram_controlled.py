@@ -198,9 +198,9 @@ def cb(update):
 
 
 print('''
-Test Telegram-Bot:
+Telegram-Bot controlled:
 Control all hardware via Telegram chat with this bot.
-Press Ctrl+C to exit test.
+Press Ctrl+C to exit.
 ''')
 try:
     while True:
