@@ -39,3 +39,12 @@ The UV-LED converts an electric current into UV light.
    **5.3** Select all files -> right-click -> `Upload to /` and make sure all were copied to the device.  
 6. Run an example by writing `from examples.basic import test_leds` and press Enter,  
 can also run by opening the file and pressing F5.
+### Creating a Telegram bot
+1. Install the [**Android Telegram App**](https://play.google.com/store/apps/details?id=org.telegram.messenger) or the [**iOS Telegram App**](https://apps.apple.com/us/app/telegram-messenger/id686449807).
+2. Register to Telegram...
+3. Open a chat with [**Bot Father**](https://telegram.me/BotFather) and create a new bot.
+4. Copy the bot token to [**secrets.py**](micropython/secrets.py).
+5. Set the `WIFI_SSID` and `WIFI_PASS` parameters in [**secrets.py**](micropython/secrets.py) to your local WiFi network.
+6. Run the Telegram Bot client by running the following command in the Micro-Python shell:  
+   `from examples.advanced import telegram_controlled`
+7. Send a `/start` text message to the bot to start the conversation.
