@@ -14,7 +14,7 @@ The UV-LED converts an electric current into UV light.
 
 ## Getting started
 ### Hardware
-1. Assemble the kit by following the assembly guide.
+1. Assemble the kit by following the [**assembly guide**](https://drive.google.com/file/d/1ZZT2MTnF2FmKq9z3wkU-5HSkHxZSyMiZ).
 2. Learn the basics from the [**presentation**](https://docs.google.com/presentation/d/10CCbnRxoIO8JoA44LrwucI05HlEwSopz_qcIy2chwl0) and visit some of it's links.
 3. View [**S2-Mini schematics**](https://www.wemos.cc/en/latest/_static/files/sch_s2_mini_v1.0.0.pdf) and [**pm_v3**](https://drive.google.com/file/d/1Le-dcOo2rCa9OkG9LgLotUU8tVFwa3I2/view) schematics.
 ### Software and Firmware

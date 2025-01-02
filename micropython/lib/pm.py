@@ -29,7 +29,7 @@ from utils import set_timer_collect
 from ir_nec import IR_RX_NEC, IR_TX_NEC
 from thermometer import Thermometer
 from secrets import SERVO_US
-from math import sqrt, degrees, asin, acos, floor
+from math import sin, cos, asin, acos, tau, radians, degrees, sqrt, floor
 from time import sleep_ms
 
 
@@ -60,7 +60,7 @@ class PM:
     HOME_POINT = (0, 18)
     X_MIN, X_MAX, Y_MIN, Y_MAX = -35, 35, 15, 65
 
-    def __init__(self, bar0=16, bar1=34, bar2=43):
+    def __init__(self, bar0=16, bar1=34, bar2=43, ir_active=False):
         self.rgb_leds = RgbLeds(Pin(NEOPIXEL_PIN))
         self.uv_led = Pin(UV_LED_PIN, Pin.OUT)
         self.blue_led = Pin(BLUE_LED_PIN, Pin.OUT)
@@ -72,8 +72,9 @@ class PM:
         self.btn_l = Pin(BTN_L_PIN, Pin.OUT, drive=Pin.DRIVE_0, value=1)
         self.btn_r = Pin(BTN_R_PIN, Pin.OUT, drive=Pin.DRIVE_0, value=1)
         self.btn_b = Pin(BTN_B_PIN, Pin.OUT, drive=Pin.DRIVE_0, value=1) # PULL_UP doesn't pull enough..
-        self.ir_rx = IR_RX_NEC(Pin(IR_RECEIVER_PIN))
-        self.ir_tx = IR_TX_NEC(Pin(IR_TRANSMITTER_PIN), active_level=False)
+        if ir_active:
+            self.ir_rx = IR_RX_NEC(Pin(IR_RECEIVER_PIN))
+            self.ir_tx = IR_TX_NEC(Pin(IR_TRANSMITTER_PIN), active_level=False)
         self.thermometer = Thermometer(1, Pin(SCL_PIN), Pin(SDA_PIN))
 
         self._bar0 = bar0
@@ -99,9 +100,8 @@ class PM:
         self.servo_l.set_angle(SERVO_ANGLES - l - SERVO_OFFSET)
         self.servo_r.set_angle(r + SERVO_OFFSET)
 
-    def set_axes(self, left_angle, right_angle):
-        self.servo_l.set_angle(left_angle - SERVO_OFFSET)
-        self.servo_r.set_angle(right_angle + SERVO_OFFSET)
+    def set_axes(self, l, r):
+        self.set_angles(180 - l, r)
 
     def set_axes_fbk(self, x, y):
         if x < self.X_MIN or y < self.Y_MIN or x > self.X_MAX or y > self.Y_MAX:
@@ -199,6 +199,25 @@ class PM:
         if closed:
             self.goto(points[0], True)
 
+    def draw_regular_poly(self, x, y, r, vertices, is_centered=True, start_angle=0):
+        if not is_centered:
+            x += r // 2
+            y += r // 2
+        a = tau / vertices
+        b = radians(start_angle)
+        self.draw_poly([(x + r * cos(i * a + b), y + r * sin(i * a + b)) for i in range(vertices)])
+
+    def draw_rect(self, x, y, w, h=None, is_centered=True):
+        if h is None:
+            h = w
+        if is_centered:
+            x -= w // 2
+            y -= h // 2
+        self.draw_poly(((x, y), (x+w, y), (x+w, y+h), (x, y+h)))
+
+    def draw_circle(self, x, y, r, is_centered=True):
+        self.draw_regular_poly(x, y, r, 20, is_centered)
+
     def get_drawing_rect(self, scale):
         if not self._next_z:
             return self.X_MIN, self.X_MAX, self.Y_MIN, self.Y_MAX
@@ -221,8 +240,9 @@ class PM:
         if not is_enabled:
             self.servo_l.set_enable(False)
             self.servo_r.set_enable(False)
-#         self.ir_rx.set_enable(is_enabled)
-#         self.ir_tx.set_enable(is_enabled)
+        if hasattr(self, 'ir_rx'):
+            self.ir_rx.set_enable(is_enabled)
+            self.ir_tx.set_enable(is_enabled)
         self.buzzer.off()
         self.rgb_leds.off()
         self.blue_led.off()

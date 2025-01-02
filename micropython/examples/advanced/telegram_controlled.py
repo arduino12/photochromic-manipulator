@@ -195,6 +195,18 @@ def cb(update):
         g_melody = (g_melody + 1) % len(MELODIES)
         _update_menu(update, 'melody')
         play_melody()
+    elif t == '🚔':
+        pm.draw_rect(0, 40, 20)
+        pm.move_home()
+    elif t == '🌈':
+        pm.draw_circle(0, 40, 10)
+        pm.move_home()
+    elif t == '🥳':
+        pm.draw_regular_poly(0, 40, 16, 3)
+        pm.move_home()
+    elif t == '🔥':
+        pm.draw_regular_poly(0, 40, 16, 6)
+        pm.move_home()
 
 
 print('''
