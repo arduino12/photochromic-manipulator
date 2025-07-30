@@ -5,7 +5,7 @@
 # https://github.com/arduino12/micropython-libs 2024/07/24
 #
 
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 
 RTTTL_SONGS = [
     'Wolf Whistle:o=5,d=16,b=900:8a4,a#4,b4,c,c#,d,d#,e,f,f#,g,g#,a,a#,b,c6,8c#6,d6,d#6,e6,f6,4p,4p,a4,a#4,b4,c,c#,d,d#,e,f,f#,g,g#,a,a#,b,a#,a,g#,g,f#,f,e,d#,d,c#,c,b4,a#4,a4',
@@ -46,6 +46,7 @@ RTTTL_SONGS = [
     'Smoke on the Water:o=4,d=4,b=112:c,d#,f.,c,d#,8f#,f,p,c,d#,f.,d#,c,2p,8p,c,d#,f.,c,d#,8f#,f,p,c,d#,f.,d#,c',
     'If I Were a Rich Man:o=5,d=8,b=160:g,f,g,f,e,p,4c,4p,e,f,g,f,g,f,e,f,g,a,a#,a,a#,a,2g.,4p,4g#,4g,4f#,4f,d#,d,c,d,4d#,4p,d#,d,c,d,4d#,4c,4g,4p',
     'Rich Mans World:o=6,d=8,b=112:e,e,e,e,e,e,16e5,16a5,16c,16e,d#,d#,d#,d#,d#,d#,16f5,16a5,16c,16d#,4d,c,a5,c,4c,2a5,32a5,32c,32e,a6',
+    'Hatikvah:d=8,o=4,b=100:a3,b3,c,d,4e,4e,f,e,f,a,2e,4d,d,d,4c,4c,b3,a3,b3,c,4a,4e3,a3,b3,c,d,4e,4e,f,e,f,a,2e 4d,d,d,4c,4c,b3,a3,b3,c,2a3',
 ]
 
 

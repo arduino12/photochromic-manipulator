@@ -16,7 +16,7 @@ _PR_FMT = 'P[{1}{{}}{0}] R[{1}{{}}{0}] T[{1}{{}}{0}]'.format(SGR_END, _LOG_W)
 _test_results = []
 
 
-pm = PM()
+pm = PM(ir_active=True)
 
 
 def test_log(_sgr, line, end='\n'):

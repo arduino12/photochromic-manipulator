@@ -5,6 +5,10 @@ from rtttl_songs import get_rtttl_song_names
 from utils import wifi_connect
 from telegram_bot import Bot, ReplyKeyboardMarkup, KeyboardButton as KB
 from secrets import *
+try:
+    from examples.advanced.test_draw import Draw
+except ImportError:
+    Draw = None
 
 
 HELP_TEXT = \
@@ -58,8 +62,13 @@ kb_draw = ReplyKeyboardMarkup((
     (KB('🔙'),),
 ))
 
+kb_drawings = ReplyKeyboardMarkup((
+    (KB('⚛'), KB('🇮🇱'), KB('🎗')),
+    (KB('🔙'),),
+))
 
 pm = PM()
+draw = None if Draw is None else Draw(pm)
 wifi_connect(WIFI_SSID, WIFI_PASS)
 bot = Bot(TELEGRAM_BOT_TOKEN)
 MELODIES = get_rtttl_song_names()
@@ -139,6 +148,8 @@ def cb(update):
         _update_menu(update, 'piano')
     elif t == '📝':
         _update_menu(update, 'draw')
+    elif t == '📖':
+        _update_menu(update, 'drawings')
     elif t == '⚫':
         set_light(update, t)
     elif t == '🔴':
@@ -207,6 +218,15 @@ def cb(update):
     elif t == '🔥':
         pm.draw_regular_poly(0, 40, 16, 6)
         pm.move_home()
+    elif t == '⚛':
+        if draw is not None:
+            draw.mabat_logo()
+    elif t == '🇮🇱':
+        if draw is not None:
+            draw.israel_flag()
+    elif t == '🎗':
+        if draw is not None:
+            draw.yellow_ribbon()
 
 
 print('''

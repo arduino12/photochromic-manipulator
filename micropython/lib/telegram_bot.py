@@ -6,11 +6,12 @@
 # https://github.com/arduino12/micropython-libs 2024/07/27
 #
 
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 
 from re import match
-from requests import post
 from json import dumps
+# from requests import post # internal bug!
+from requests2 import post
 
 
 def fix_surrogate(s): # https://en.wikipedia.org/wiki/UTF-16
@@ -96,7 +97,7 @@ class Bot():
     def _message(self, chat_id, text, reply_markup=None, message_id=None):
         parameters = {
             'chat_id': chat_id,
-            'text': text.replace('.', '\\.')
+            'text': text.replace('.', '\\.'),
         }
         if message_id is not None:
             parameters['message_id'] = message_id

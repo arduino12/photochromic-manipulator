@@ -10,6 +10,10 @@ try:
     from secrets import USERNAME
 except ImportError:
     USERNAME = None
+try:
+    from examples.advanced.test_draw import Draw
+except ImportError:
+    Draw = None
 
 
 class EspNowChat:
@@ -46,6 +50,7 @@ class EspNowChat:
         self._ipoll = poll()
         self._ipoll.register(stdin, POLLIN)
         self._pm = PM()
+        self.draw = None if Draw is None else Draw(self._pm)
 
     def _nonblocking_input(self):
         line = '' # Thonny IDE shell is bufferd- user input is sent only after ENTER is pressed
@@ -85,6 +90,17 @@ class EspNowChat:
             return self._espnow_send('/beep {} {}'.format(freq, username))
         if freq.isdigit():
             self._pm.buzzer.beep(int(freq), -1000) # -1000ms = non-blocking
+
+    def _cmd_eval(self, caller, cmd, username=None):
+        if caller == self._name:
+            args = cmd if username is None else '{} {}'.format(cmd, username)
+            return self._espnow_send('/eval {}'.format(args))
+        if username is None or username == self._name:
+#             print(self._NAME, caller, SGR_END, ' command you to eval: ', cmd, sep='')
+            try:
+                eval(cmd)
+            except Exception:
+                pass
 
     def _handle_command(self, caller, line):
         args = line.split()

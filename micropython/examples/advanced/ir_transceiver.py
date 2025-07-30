@@ -3,7 +3,7 @@ from time import sleep_ms
 from pm import PM
 
 
-pm = PM()
+pm = PM(ir_active=True)
 
 
 def set_leds_color(c):
