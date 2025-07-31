@@ -72,6 +72,7 @@ draw = None if Draw is None else Draw(pm)
 wifi_connect(WIFI_SSID, WIFI_PASS)
 bot = Bot(TELEGRAM_BOT_TOKEN)
 MELODIES = get_rtttl_song_names()
+WEATHER_EMOJI = '❄🌧☁🌥⛅🌤☀'
 # bot.send_message(TELEGRAM_USER_IDS[0], 'Hi♥', reply_markup=kb_piano)
 
 
@@ -218,6 +219,11 @@ def cb(update):
     elif t == '🔥':
         pm.draw_regular_poly(0, 40, 16, 6)
         pm.move_home()
+    elif t == '🌡':
+        temp = int(pm.thermometer.read_temp_c())
+        update.reply('Temperature: {:02d}°C {}'.format(
+            temp, WEATHER_EMOJI[0 if temp <= 20 else 6 if temp >= 30 else int((temp-20) / 2)]),
+            reply_markup=kb_main)
     elif t == '⚛':
         if draw is not None:
             draw.mabat_logo()
