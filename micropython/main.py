@@ -5,3 +5,4 @@
 # from examples.basic import test_leds
 # from examples.advanced import telegram_controlled
 # from examples.advanced.test_draw import main; main()
+# from examples.advanced.espnow_chat import main; main()

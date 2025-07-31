@@ -152,13 +152,16 @@ class EspNowChat:
         self._pm.set_enable(False)
 
 
-if __name__ == '__main__':
+def main():
+    global enc
     enc = EspNowChat()
     enc.loop()
-
-
-modules.clear() # make sure we can re-import the example!
-print('''
+    modules.clear() # make sure we can re-import the example!
+    print('''
 Done!
 Can press Ctrl-D to soft-reset.
-''')
+    ''')
+
+
+if __name__ == '__main__':
+    main()

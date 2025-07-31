@@ -127,7 +127,7 @@ class Draw:
         self._pm.rgb_leds.off()
         self._end(**kw)
 
-pm=None
+
 def main():
     global pm
     draw = Draw()
@@ -141,7 +141,6 @@ Press buttons to draw next or previous drawing.
 Press Ctrl-C to exit.
     ''')
     try:
-        draw.yellow_ribbon(); raise KeyboardInterrupt()
         while True:
             btn = (not pm.btn_l.value()) * 1 + (not pm.btn_r.value()) * 2
             if btn and btn != last_btn:
