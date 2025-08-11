@@ -111,6 +111,35 @@ class PM:
     def set_axes(self, l, r):
         self.set_angles(180 - l, r)
 
+    def get_linkage_d_location(self,x,y,offset=0.1):
+        """
+   +---------------------------------------+
+   |                                       |
+   |                  (D)                  |
+   |                /     \                |
+   |           (x,y)         \             |
+   |          /                 \          |
+   |    PM_BAR2                    \       |
+   |    /                             \    |
+   | /                                   \ |
+   (C)                                   (O)
+   | \                                   / |
+   |   \                               /   |
+   |   PM_BAR1                       /     |
+   |       \                       /       |
+   |         \                   /         |
+   |           \               /           |
+   +-----------(B)--PM_BAR0-(A)------------+{0}
+        given the pair (x,y), where (x,y) is the location shown in the diagram,
+        return the location of the linkage point D in (x,y) coordinates.
+        The offset is the distance between the linkage point D and the LED in units.
+        The lengths between A and B is PM_BAR0,
+        The lengths between B and C is PM_BAR1,
+        The lengths between C and D is PM_BAR2,
+        """
+        
+        pass
+
     def set_axes_fbk(self, x, y):
         if x < self.X_MIN or y < self.Y_MIN or x > self.X_MAX or y > self.Y_MAX:
             return 0

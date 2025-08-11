@@ -26,7 +26,7 @@ The UV-LED converts an electric current into UV light.
   **3.2** Press toolbar's `Run` -> `Configure interpreter`.  
   **3.3** Select `MicroPython (ESP32)` on the second line.  
   **3.4** Press the bottom `Install or update MicroPython (esptool)`.  
-  **3.5** download v.1.23.0 of micropython for our esp32-s2 chip [here](https://micropython.org/resources/firmware/LOLIN_S2_MINI-20240602-v1.23.0.bin)  
+  **3.5** download v.1.23.0 of micropython for our esp32-s2 chip [here](https://micropython.org/resources/firmware/LOLIN_S2_MINI-20240602-v1.23.0.bin).  
   **3.6** Select from the button near "install" (hamburger icon) "select local micropython image" and select our downloaded file.  
   **3.7** Press the `Install` button and wait for "Done" message!  
   **3.8** **Press the small reset button (marked "RST" on the PCB).**  
