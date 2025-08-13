@@ -19,6 +19,22 @@
 
 __version__ = '4.0.0'
 
+# Lightweight logger: uses logging if available, falls back to prints
+try:
+    import logging
+    logger = logging.getLogger("pm")
+except Exception:
+    class _MiniLogger:
+        def warning(self, msg, *args):
+            try:
+                print("WARN:", msg % args if args else msg)
+            except Exception:
+                print("WARN:", msg)
+        def info(self, *args, **kwargs):
+            pass
+        def debug(self, *args, **kwargs):
+            pass
+    logger = _MiniLogger()
 from micropython import const
 from machine import Pin, Timer, TouchPad, freq
 from buzzer import Buzzer
@@ -31,7 +47,6 @@ from thermometer import Thermometer
 from secrets import SERVO_US
 from math import sin, cos, asin, acos, tau, radians, degrees, sqrt, floor
 from time import sleep_ms, sleep_us
-
 
 HW_VERSION = const(3)
 SW_VERSION = const(1)
@@ -57,6 +72,7 @@ SERVO_ANGLES = const(170)
 PM_BAR0 = const(16)
 PM_BAR1 = const(34)
 PM_BAR2 = const(43)
+OFFSET = const(0)
 
 
 class PM:
@@ -111,11 +127,68 @@ class PM:
     def set_axes(self, l, r):
         self.set_angles(180 - l, r)
 
-    def set_axes_fbk(self, x, y):
-        if x < self.X_MIN or y < self.Y_MIN or x > self.X_MAX or y > self.Y_MAX:
-            return 0
+    def is_within_canvas(self, x, y):
+        return self.X_MIN <= x <= self.X_MAX and self.Y_MIN <= y <= self.Y_MAX
 
+    def get_led_location_from_eo(self,x,y):
+        """
+        reverse of get eo location from led, for testing f^-1(f(x))=x.
+        """
+        if OFFSET <= 0:
+            return x, y
+
+        l_a, _ = self.compute_angles_fbk(x,y)
+        l_a = radians(l_a)
+        t = OFFSET / PM_BAR2
+
+        #forward kinematics
+        c_x = PM_BAR1 * cos(l_a) - PM_BAR0 / 2
+        c_y = PM_BAR1 * sin(l_a)
+        d_x = x
+        d_y = y
+        led_x = c_x + (d_x - c_x) * (1 - t)
+        led_y = c_y + (d_y - c_y) * (1 - t)
+        return led_x, led_y
+
+    def get_eo_location_from_led(self,x,y):
+        """
+   +---------------------------------------+
+   |                                       |
+   |                  (eo)                 |
+   |     OFFSET --> /     \                |
+   |           (x,y)         \             |
+   |          /                 \          |
+   |    PM_BAR2                    \       |
+   |    /                             \    |
+   | /                                   \ |
+   (C)                                   (O)
+   | \                                   / |
+   |   \                               /   |
+   |   PM_BAR1                       /     |
+   |       \                       /       |
+   |         \                   /         |
+   |           \               /           |
+   +-----------(B)--PM_BAR0-(A)------------+{0}
+        given the pair (x,y), where (x,y) is the location shown in the diagram (where the led is located)
+        return the location of the end effector (eo) in (x,y) coordinates.
+        The offset is the distance between the end effector and the LED in *units* along PM_BAR2.
+        """
+        if OFFSET <= 0:
+            return x, y
+        # when starting from LED, the effective length of PM_BAR2 is shortened by the offset.
+        l_a, _ = self.compute_angles_fbk(x,y,bar2_length=PM_BAR2-OFFSET)
+        l_a = radians(l_a)
+        t = OFFSET / PM_BAR2
+        #forward kinematics
+        c_x = PM_BAR1 * cos(l_a) - PM_BAR0 / 2
+        c_y = PM_BAR1 * sin(l_a)
+        d_x = (x - (t * c_x)) / (1 - t)
+        d_y = (y - (t * c_y)) / (1 - t)
+        return d_x, d_y
+
+    def compute_angles_fbk(self,x,y, bar2_length = PM_BAR2):
         half_b0 = PM_BAR0 / 2
+        
         l_x = x + half_b0
         r_x = x - half_b0
 
@@ -125,10 +198,8 @@ class PM:
 
         l_s = sqrt(l_ss)
         r_s = sqrt(r_ss)
-
         l_a = degrees(asin(y / l_s))
         r_a = degrees(asin(y / r_s))
-
         if l_x <= 0:
             l_a = 180 - l_a
 
@@ -136,19 +207,37 @@ class PM:
             r_a = 180 - r_a
 
         bb1 = 2 * PM_BAR1
-        b1b2 = PM_BAR1 ** 2 - PM_BAR2 ** 2
+        b1b2 = PM_BAR1 ** 2 - bar2_length ** 2
+        l_cos = (b1b2 + l_ss) / (bb1 * l_s)
+        r_cos = (b1b2 + r_ss) / (bb1 * r_s)
+        if not (-1 < l_cos < 1 or -1 < r_cos < 1):
+            logger.warning(f"cos of IK out of bounds, skipping. (l_cos: {l_cos},r_cos:{r_cos})")
+            raise IndexError
 
-        l_a += degrees(acos((b1b2 + l_ss) / (bb1 * l_s)))
-        r_a += degrees(acos((b1b2 + r_ss) / (bb1 * r_s)))
+        l_a += degrees(acos(max(-1, min(1, l_cos))))
+        r_a += degrees(acos(max(-1, min(1, r_cos))))
 
         r_a = 180 - r_a
+        
+        return l_a, r_a
 
+
+    def set_axes_fbk(self, x, y):
+        if not self.is_within_canvas(x,y):
+            logger.warning(f"x,y location ({x},{y}) is out of canvas. skipping render.")
+            return 0
+        try:
+            x,y = self.get_eo_location_from_led(x,y)
+            l_a, r_a = self.compute_angles_fbk(x,y)
+        except IndexError:
+            print('skipping angle out of bounds render.')
+            return 0
         self.set_axes(l_a, r_a)
 #         max_a = max(abs(self._last_l_angle - l_a), abs(self._last_r_angle - r_a))
 #         self._last_l_angle = l_a
 #         self._last_r_angle = r_a
 #         return max_a
-
+    
     def _move_to(self, p_x, p_y, speed):
         d_x = p_x - self._last_x
         d_y = p_y - self._last_y
