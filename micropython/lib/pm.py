@@ -19,6 +19,22 @@
 
 __version__ = '4.0.0'
 
+# Lightweight logger: uses logging if available, falls back to prints
+try:
+    import logging
+    logger = logging.getLogger("pm")
+except Exception:
+    class _MiniLogger:
+        def warning(self, msg, *args):
+            try:
+                print("WARN:", msg % args if args else msg)
+            except Exception:
+                print("WARN:", msg)
+        def info(self, *args, **kwargs):
+            pass
+        def debug(self, *args, **kwargs):
+            pass
+    logger = _MiniLogger()
 from micropython import const
 from machine import Pin, Timer, TouchPad, freq
 from buzzer import Buzzer
@@ -57,6 +73,7 @@ PM_BAR0 = const(16)
 PM_BAR1 = const(34)
 PM_BAR2 = const(43)
 OFFSET = const(10)
+
 
 class PM:
     HOME_POINT = (0, 18)
@@ -191,9 +208,13 @@ class PM:
 
         bb1 = 2 * PM_BAR1
         b1b2 = PM_BAR1 ** 2 - bar2_length ** 2
+        l_cos = (b1b2 + l_ss) / (bb1 * l_s)
+        r_cos = (b1b2 + r_ss) / (bb1 * r_s)
+        if not (-1 < l_cos < 1 or -1 < r_cos < 1):
+            logger.warning(f"cos of IK out of bounds, clipping. (l_cos: {l_cos},r_cos:{r_cos})")
 
-        l_a += degrees(acos((b1b2 + l_ss) / (bb1 * l_s)))
-        r_a += degrees(acos((b1b2 + r_ss) / (bb1 * r_s)))
+        l_a += degrees(acos(max(-1, min(1, l_cos))))
+        r_a += degrees(acos(max(-1, min(1, r_cos))))
 
         r_a = 180 - r_a
         

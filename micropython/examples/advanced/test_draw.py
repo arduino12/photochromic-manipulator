@@ -50,11 +50,6 @@ class Draw:
         self._pm.draw_regular_poly(0, 40, 20, 6)
         self._end(**kw)
 
-    def centered_hexagon(self, **kw):
-        self._begin()
-        self._pm.draw_regular_poly(0, 40, 20, 6)
-        self._end(**kw)
-
     def heart_line(self, **kw):
         self._begin()
         self._pm.rgb_leds.fill('red')
