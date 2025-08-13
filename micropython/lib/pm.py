@@ -120,15 +120,13 @@ class PM:
         if OFFSET <= 0:
             return x, y
 
-        l_a, r_a = self.compute_angles_fbk(x,y)
-        print('angles (only left relevant for now): ',l_a, r_a)
+        l_a, _ = self.compute_angles_fbk(x,y)
         l_a = radians(l_a)
         t = OFFSET / PM_BAR2
 
         #forward kinematics
         c_x = PM_BAR1 * cos(l_a) - PM_BAR0 / 2
         c_y = PM_BAR1 * sin(l_a)
-        print('c is at: ', c_x, c_y)
         d_x = x
         d_y = y
         led_x = c_x + (d_x - c_x) * (1 - t)
@@ -161,16 +159,12 @@ class PM:
         if OFFSET <= 0:
             return x, y
         # when starting from LED, the effective length of PM_BAR2 is shortened by the offset.
-        l_a, r_a = self.compute_angles_fbk(x,y,bar2_length=PM_BAR2-OFFSET)
-        print('angles (only left relevant for now): ',l_a, r_a)
+        l_a, _ = self.compute_angles_fbk(x,y,bar2_length=PM_BAR2-OFFSET)
         l_a = radians(l_a)
         t = OFFSET / PM_BAR2
-        print('offset, pmbar2:', OFFSET, PM_BAR2)
-        print('relative location of led on bar: ',t)
         #forward kinematics
         c_x = PM_BAR1 * cos(l_a) - PM_BAR0 / 2
         c_y = PM_BAR1 * sin(l_a)
-        print('c is at: ', c_x, c_y)
         d_x = (x - (t * c_x)) / (1 - t)
         d_y = (y - (t * c_y)) / (1 - t)
         return d_x, d_y
@@ -187,10 +181,8 @@ class PM:
 
         l_s = sqrt(l_ss)
         r_s = sqrt(r_ss)
-        print('segment length between midpoint and servos [l,r]:', l_s, r_s)
         l_a = degrees(asin(y / l_s))
         r_a = degrees(asin(y / r_s))
-        print('segment angle between midpoint and servos rad [l,r]:', radians(l_a), radians(r_a))
         if l_x <= 0:
             l_a = 180 - l_a
 
@@ -209,13 +201,10 @@ class PM:
 
 
     def set_axes_fbk(self, x, y):
-        print('initial xy: ', x, y)
         if not self.is_within_canvas(x,y):
             raise IndexError(f"x,y location ({x},{y}) is out of canvas.")
         x,y = self.get_eo_location_from_led(x,y)
-        print(x,y)
         l_a, r_a = self.compute_angles_fbk(x,y)
-        print('angles: ',l_a,r_a)
         self.set_axes(l_a, r_a)
 #         max_a = max(abs(self._last_l_angle - l_a), abs(self._last_r_angle - r_a))
 #         self._last_l_angle = l_a
