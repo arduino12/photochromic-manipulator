@@ -72,7 +72,7 @@ SERVO_ANGLES = const(170)
 PM_BAR0 = const(16)
 PM_BAR1 = const(34)
 PM_BAR2 = const(43)
-OFFSET = const(10)
+OFFSET = const(0)
 
 
 class PM:
@@ -223,7 +223,8 @@ class PM:
 
     def set_axes_fbk(self, x, y):
         if not self.is_within_canvas(x,y):
-            raise IndexError(f"x,y location ({x},{y}) is out of canvas.")
+            logger.warning(f"x,y location ({x},{y}) is out of canvas. skipping render.")
+            return 0
         x,y = self.get_eo_location_from_led(x,y)
         l_a, r_a = self.compute_angles_fbk(x,y)
         self.set_axes(l_a, r_a)
