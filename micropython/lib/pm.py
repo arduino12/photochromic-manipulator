@@ -154,7 +154,7 @@ class PM:
         """
    +---------------------------------------+
    |                                       |
-   |                  (eo)                  |
+   |                  (eo)                 |
    |     OFFSET --> /     \                |
    |           (x,y)         \             |
    |          /                 \          |
@@ -211,7 +211,8 @@ class PM:
         l_cos = (b1b2 + l_ss) / (bb1 * l_s)
         r_cos = (b1b2 + r_ss) / (bb1 * r_s)
         if not (-1 < l_cos < 1 or -1 < r_cos < 1):
-            logger.warning(f"cos of IK out of bounds, clipping. (l_cos: {l_cos},r_cos:{r_cos})")
+            logger.warning(f"cos of IK out of bounds, skipping. (l_cos: {l_cos},r_cos:{r_cos})")
+            raise IndexError
 
         l_a += degrees(acos(max(-1, min(1, l_cos))))
         r_a += degrees(acos(max(-1, min(1, r_cos))))
@@ -225,8 +226,12 @@ class PM:
         if not self.is_within_canvas(x,y):
             logger.warning(f"x,y location ({x},{y}) is out of canvas. skipping render.")
             return 0
-        x,y = self.get_eo_location_from_led(x,y)
-        l_a, r_a = self.compute_angles_fbk(x,y)
+        try:
+            x,y = self.get_eo_location_from_led(x,y)
+            l_a, r_a = self.compute_angles_fbk(x,y)
+        except IndexError:
+            print('skipping angle out of bounds render.')
+            return 0
         self.set_axes(l_a, r_a)
 #         max_a = max(abs(self._last_l_angle - l_a), abs(self._last_r_angle - r_a))
 #         self._last_l_angle = l_a
