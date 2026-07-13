@@ -6,7 +6,7 @@
 # https://github.com/arduino12/micropython-libs 2023/06/30
 #
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 
 from micropython import const
 from machine import Pin, Timer
@@ -82,14 +82,14 @@ class IR_TX_NEC:
 
 class IR_RX_NEC():
 
-    def __init__(self, pin, repeats=False, extended=True):
+    def __init__(self, pin, repeats=False, extended=True, timer_id=0):
         self._pin = pin
         self._repeats = repeats
         self._extended = extended
         self._callback = None
         self._edge = 0
         self._times = array('i',  (0 for _ in range(_NEC_BITS + 1)))
-        self._timer = Timer(-1)
+        self._timer = Timer(timer_id)
         self._queue = deque((), 100)
         self._lock = allocate_lock()
         self.set_enable(True)

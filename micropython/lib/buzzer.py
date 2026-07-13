@@ -6,7 +6,7 @@
 # https://github.com/arduino12/micropython-libs 2023/06/17
 #
 
-__version__ = '2.0.1'
+__version__ = '2.1.0'
 
 from machine import Pin, PWM, mem32
 from time import sleep_ms
@@ -125,8 +125,8 @@ class Buzzer:
     def __init__(self, a_pin, b_pin=None):
         # create a PWM for the given a_pin at 50% duty-cycle
         self._pwm = PWM(a_pin, duty_u16=0)
-        self._note_timer = Timer(-1)
-        self._beep_timer = Timer(-2) # if -1 no callbacks!
+        self._note_timer = Timer(1)
+        self._beep_timer = Timer(2)
         self._lock = allocate_lock()
         self._notes = []
 

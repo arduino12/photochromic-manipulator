@@ -4,7 +4,7 @@
 # https://github.com/arduino12/micropython-libs 2023/06/17
 #
 
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 
 from machine import PWM
 
@@ -17,7 +17,7 @@ class Servo:
         self._angles = angles
         self._angle_us = (max_us - min_us) / angles
         self._us = 0
-        self._pwm = PWM(pin, freq=50, duty_ns=0)
+        self._pwm = PWM(pin, freq=50, duty_u16=0)
 
     def set_us(self, us):
         if us:

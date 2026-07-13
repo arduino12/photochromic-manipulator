@@ -17,15 +17,14 @@
 # https://github.com/arduino12/photochromic_manipulator 2024/07/24
 #
 
-__version__ = '4.0.0'
+__version__ = '4.1.0'
 
 from micropython import const
-from machine import Pin, Timer, TouchPad, freq
+from machine import Pin, TouchPad, freq
 from buzzer import Buzzer
 from servo import Servo
 from gc import collect
 from rgb_leds import RgbLeds
-from utils import set_timer_collect
 from ir_nec import IR_RX_NEC, IR_TX_NEC
 from thermometer import Thermometer
 from secrets import SERVO_US
@@ -289,7 +288,7 @@ class PM:
 
     def set_enable(self, is_enabled):
         self.stop()
-        set_timer_collect(is_enabled)
+        collect() # free unuesed RAM!
         if not is_enabled:
             self.servo_l.set_enable(False)
             self.servo_r.set_enable(False)

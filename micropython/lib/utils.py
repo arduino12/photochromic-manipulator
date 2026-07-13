@@ -4,24 +4,13 @@
 # https://github.com/arduino12/micropython-libs 2023/07/04
 #
 
-__version__ = '1.0.2'
+__version__ = '1.1.0'
 
-from machine import Timer
-from gc import collect
 from network import WLAN, STA_IF
 from time import sleep_ms
 
 
 _PARAM_PATH = './secrets.py'
-_timer_collect = Timer(-1)
-
-
-def set_timer_collect(is_enabled, seconds=60):
-    if is_enabled:
-        _timer_collect.init(period=seconds * 1000, mode=Timer.PERIODIC,
-                            callback=lambda _: collect())
-    else:
-        _timer_collect.deinit()
 
 
 def wifi_connect(ssid, password, timeout_ms=6000):
