@@ -17,7 +17,7 @@
 # https://github.com/arduino12/photochromic_manipulator 2024/07/24
 #
 
-__version__ = '4.1.0'
+__version__ = '4.1.1'
 
 from micropython import const
 from machine import Pin, TouchPad, freq
@@ -281,7 +281,7 @@ class PM:
             self._next_y[i] = func_y(self._next_y[i])
 
     def drawing_scale(self, scale):
-        self.drawing_transform(lambda x, y: (x * scale, y * scale))
+#        self.drawing_transform(lambda x, y: (x * scale, y * scale))
         for i in range(len(self._next_z)):
             self._next_x[i] *= scale
             self._next_y[i] *= scale

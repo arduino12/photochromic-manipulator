@@ -6,7 +6,7 @@
 # https://github.com/arduino12/micropython-libs 2023/06/17
 #
 
-__version__ = '2.1.0'
+__version__ = '2.1.1'
 
 from machine import Pin, PWM, mem32
 from time import sleep_ms
@@ -171,7 +171,7 @@ class Buzzer:
 
         n += (int(note[-1]) - 1) * 12
 
-        self.beep(440 * (2 ** (keyNumber- 48) / 12), ms)
+        self.beep(440 * (2 ** (n- 48) / 12), ms)
 
     def _note_timer_cb(self, _):
         with self._lock:
@@ -207,7 +207,7 @@ class Buzzer:
 
     def stop(self):
         with self._lock:
-            return self._notes.clear()
+            self._notes.clear()
         self.off()
 
 
