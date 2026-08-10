@@ -2,7 +2,6 @@ from sys import modules
 from time import sleep
 from pm import PM
 
-
 class Draw:
 
     _HEART_POLY = [
@@ -44,11 +43,6 @@ class Draw:
         for i in range(3):
             size = 16 + i * 4
             self._pm.draw_rect(0, 40, size)
-        self._end(**kw)
-
-    def centered_hexagon(self, **kw):
-        self._begin()
-        self._pm.draw_regular_poly(0, 40, 20, 6)
         self._end(**kw)
 
     def centered_hexagon(self, **kw):
@@ -126,6 +120,12 @@ class Draw:
         sleep(2)
         self._pm.rgb_leds.off()
         self._end(**kw)
+    
+    def test_lines(self, **kw):
+        self._begin(draw_speed=1)
+        self._pm.draw_line((0, 20), (0, 50))
+        self._pm.draw_circle(0, 40, 10)
+        self._end(**kw)
 
 
 def main():
@@ -159,7 +159,7 @@ Press Ctrl-C to exit.
     print('''
 Done!
 Can press Ctrl-D to soft-reset.
-    ''')
+        ''')
 
 
 if __name__ == '__main__':
